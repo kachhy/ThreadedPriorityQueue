@@ -77,7 +77,7 @@ public:
         if (m_heapVector.empty())
             throw std::runtime_error("pop() attempted on empty communication queue.");
 
-        T temp = std::move(m_heapVector[0]);
+        T temp = std::move(m_heapVector.front());
         
         if (m_heapVector.size() > 1) {
             m_heapVector[0] = std::move(m_heapVector.back());
@@ -121,7 +121,7 @@ public:
         if (m_heapVector.empty())
             return std::nullopt;
 
-        T temp = std::move(m_heapVector[0]);
+        T temp = std::move(m_heapVector.front());
         
         if (m_heapVector.size() > 1) {
             m_heapVector[0] = std::move(m_heapVector.back());
