@@ -1,5 +1,5 @@
-#ifndef COMMUNICATION_QUEUE_H
-#define COMMUNICATION_QUEUE_H
+#ifndef THREADED_PRIORITY_QUEUE_H
+#define THREADED_PRIORITY_QUEUE_H
 
 #include <condition_variable>
 #include <optional>
@@ -182,4 +182,4 @@ public:
     }
 };
 
-#endif // COMMUNICATION_QUEUE_H
+#endif // THREADED_PRIORITY_QUEUE_H
