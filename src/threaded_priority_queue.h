@@ -49,8 +49,9 @@ class ThreadedPriorityQueue {
             if (left_child < n
                 && Comp{}(m_heapVector[left_child], m_heapVector[largest_index]))
                 largest_index = left_child;
+                
             if (right_child < n
-                     && Comp{}(m_heapVector[right_child], m_heapVector[largest_index]))
+                && Comp{}(m_heapVector[right_child], m_heapVector[largest_index]))
                 largest_index = right_child;
             
             if (largest_index == index)
