@@ -9,14 +9,21 @@
 #include <mutex>
 
 // We default to a minheap.
-struct LessThanComparitor {
+struct MinHeapComparitor {
     template <typename T>
     bool operator()(const T& a, const T& b) const {
         return a < b;
     }
 };
 
-template <typename T, typename Comp = LessThanComparitor>
+struct MaxHeapComparitor {
+    template <typename T>
+    bool operator()(const T& a, const T& b) const {
+        return a > b;
+    }
+};
+
+template <typename T, typename Comp = MinHeapComparitor>
 class ThreadedPriorityQueue {
     struct HeapVec {
         T* m_arr = nullptr;
