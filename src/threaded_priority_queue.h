@@ -186,7 +186,7 @@ public:
     inline T pop() {
         std::lock_guard<std::mutex> lock(m_commMutex);
         if (m_heapVector.empty())
-            throw std::runtime_error("pop() attempted on empty communication queue.");
+            throw std::runtime_error("pop() attempted on empty priority queue.");
 
         T temp = std::move(m_heapVector.front());
         
@@ -285,7 +285,8 @@ public:
     inline const T& top() const {
         std::lock_guard<std::mutex> lock(m_commMutex);
         if (m_heapVector.empty())
-            throw std::runtime_error("top() attempted on empty communication queue.");
+            throw std::runtime_error("top() attempted on empty priority queue.");
+
         return m_heapVector.front();
     }
 
