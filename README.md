@@ -1,2 +1,2 @@
-# CommunicationQueue
+# ThreadedPriorityQueue
 Multithreading compatible priority queue
