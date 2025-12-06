@@ -56,11 +56,11 @@ class ThreadedPriorityQueue {
             return !m_size;
         }
 
-        inline T& front() {
+        inline const T& front() const {
             return m_arr[0];
         }
 
-        inline T& back() {
+        inline const T& back() const {
             return m_arr[m_size - 1];
         }
 
