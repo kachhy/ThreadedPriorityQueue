@@ -254,23 +254,6 @@ public:
         m_readCondition.notify_one();
     }
 
-    template <typename... Args>
-    inline void wait_empty_push(Args&&... args) { // Waits til empty
-        std::unique_lock<std::mutex> lock(m_commMutex);
-        
-        // Wait until empty or done
-        m_readCondition.wait(lock, [this] {
-            return m_heapVector.empty() || m_isDone;
-        });
-
-        if (m_isDone)
-            return;
-
-        m_heapVector.emplace_back(std::forward<Args>(args)...);
-        percolate_up(m_heapVector.m_size - 1);
-        m_readCondition.notify_one();
-    }
-    
     inline std::optional<T> wait_nonempty_pop() { // Waits til non-empty
         std::unique_lock<std::mutex> lock(m_commMutex);
         
