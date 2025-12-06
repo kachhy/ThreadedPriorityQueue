@@ -255,7 +255,7 @@ public:
     }
 
     template <typename... Args>
-    inline void wait_empty_emplace(Args&&... args) { // Waits til empty
+    inline void wait_empty_push(Args&&... args) { // Waits til empty
         std::unique_lock<std::mutex> lock(m_commMutex);
         
         // Wait until empty or done
