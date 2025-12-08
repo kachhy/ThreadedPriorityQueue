@@ -281,6 +281,46 @@ public:
         return std::make_optional<T>(std::move(temp));
     }
 
+    // Strictly nonthreaded push/pop (unsafe)
+    inline void unsafe_push(const T& item) noexcept {
+        m_heapVector.push_back(item);
+        percolate_up(m_heapVector.m_size - 1);
+        m_readCondition.notify_one();
+    }
+
+    inline void unsafe_push(T&& item) noexcept {
+        m_heapVector.push_back(std::move(item));
+        percolate_up(m_heapVector.m_size - 1);
+        m_readCondition.notify_one();
+    }
+
+    template <typename... Args>
+    inline void unsafe_push(Args&&... args) noexcept {
+        m_heapVector.emplace_back(std::forward<Args>(args)...);
+        percolate_up(m_heapVector.m_size - 1);
+        m_readCondition.notify_one();
+    }
+
+    inline T unsafe_pop() {
+        if (m_heapVector.empty())
+            throw std::runtime_error("pop() attempted on empty priority queue.");
+
+        T temp = std::move(m_heapVector.front());
+        
+        if (m_heapVector.m_size > 1) {
+            m_heapVector[0] = std::move(m_heapVector.back());
+            m_heapVector.pop_back();
+            percolate_down(0);
+        } else
+            m_heapVector.pop_back();
+        
+        // Notify if the queue became empty, as this state is used by wait_empty_push
+        if (m_heapVector.empty())
+            m_readCondition.notify_one();
+        
+        return temp;
+    }
+
     // Strict getters
     inline const T& top() const {
         std::lock_guard<std::mutex> lock(m_commMutex);
