@@ -8,22 +8,7 @@
 #include <thread>
 #include <mutex>
 
-// We default to a minheap.
-struct MinHeapComparitor {
-    template <typename T>
-    bool operator()(const T& a, const T& b) const {
-        return a < b;
-    }
-};
-
-struct MaxHeapComparitor {
-    template <typename T>
-    bool operator()(const T& a, const T& b) const {
-        return a > b;
-    }
-};
-
-template <typename T, typename Comp = MinHeapComparitor>
+template <typename T, typename Comp = std::less<T>>
 class ThreadedPriorityQueue {
     struct HeapVec {
         T* m_arr = nullptr;
