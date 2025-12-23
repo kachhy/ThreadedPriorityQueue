@@ -15,7 +15,11 @@ class ThreadedPriorityQueue {
         size_t m_size = 0, m_capacity = 0;
 
         HeapVec() = default;
-        // Freeing handled by TPQ
+        // Note: Freeing handled by TPQ
+
+        inline bool empty() const noexcept { return !m_size; }
+        inline const T& front() const { return m_arr[0]; }
+        inline const T& back() const { return m_arr[m_size - 1]; }
 
         inline void reserve(size_t cap) noexcept {
             if (cap <= m_capacity)
@@ -35,18 +39,6 @@ class ThreadedPriorityQueue {
             }
 
             m_capacity = cap;
-        }
-
-        inline bool empty() const noexcept {
-            return !m_size;
-        }
-
-        inline const T& front() const {
-            return m_arr[0];
-        }
-
-        inline const T& back() const {
-            return m_arr[m_size - 1];
         }
 
         inline void pop_back() noexcept {
